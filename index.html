@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html lang="en" ng-app="angularTable">
+  <head>
+    <meta charset="utf-8">
+    <title>Search Sort and Pagination in Angular js</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
+  <body>
+	<div role="main" class="container theme-showcase">
+      <div class="" style="margin-top:90px;">
+        <div class="col-lg-12">
+			<div class="page-header">
+				<h2 id="tables">Search Sort and Pagination in Angular js</h2>
+			</div>
+			<div class="bs-component" ng-controller="listdata" ng-cloak>
+				<div class="alert alert-info">
+					<p>Sort key: {{sortKey}}</p>
+					<p>Reverse: {{reverse}}</p>
+					<p>Search String : {{search}}</p>
+                    <p>My Filter : {{filterData}}</p>
+				</div>
+				<form class="form-inline">
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <label>First Name:</label>
+                            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Last Name:</label>
+                            <input type="text" ng-model="ln" class="form-control" placeholder="Search">
+                        </div>
+                        <div class="col-lg-3" ng-cloak>
+                            First Name:
+                            <select multiple="true" ng-model="filterData.first_name">
+                                <option ng-repeat="fname in FirstNames" value="{{fname}}">{{fname}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3" ng-cloak>
+                            Last Name:
+                            <select multiple="true" ng-model="filterData.last_name">
+                                <option ng-repeat="lname in LastNames" value="{{lname}}">{{lname}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3" ng-cloak>
+                            Hobby:
+                            <select multiple="true" ng-model="filterData.hobby">
+                                <option ng-repeat="hobby in Hobbies" value="{{hobby}}">{{hobby}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            Reset Filters:
+                            <button ng-click="ClearFilters()">Reset</button>
+                        </div>
+                        <div class="col-lg-6">
+                            Toggle All:
+                            <button ng-click="ToggleAll()">Toggle</button>
+                        </div>
+                    </div>
+				</form>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+                            <th>
+                            </th>
+							<th ng-click="sort('id')">Id
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+							</th>
+							<th ng-click="sort('first_name')">First Name
+								<span class="glyphicon sort-icon" ng-show="sortKey=='first_name'" ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+							</th>
+							<th ng-click="sort('last_name')">Last Name
+								<span class="glyphicon sort-icon" ng-show="sortKey=='last_name'" ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+							</th>
+							<th ng-click="sort('hobby')">Hobby
+								<span class="glyphicon sort-icon" ng-show="sortKey=='hobby'" ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+                        <tr dir-paginate-start="user in users|orderBy:sortKey:reverse|customFilter:filterData|filter:{first_name : search, last_name : ln}|itemsPerPage:5">
+                            <td>
+                                <button ng-show="collapsed" ng-click="collapsed=false;">+</button>
+                                <button ng-show="!collapsed" ng-click="collapsed=true;">-</button>
+                            </td>
+                            <td>{{user.id}}</td>
+                            <td>{{user.first_name}}</td>
+                            <td>{{user.last_name}}</td>
+                            <td>{{user.hobby}}</td>
+                        </tr>
+                        <tr dir-paginate-end ng-show="!collapsed">
+                            <td colspan="5">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <tr>
+                                        <th ng-click="sortChildren('phone')">Phone
+                                            <span class="glyphicon sort-icon" ng-show="childSortKey=='phone'" ng-class="{'glyphicon-chevron-up':!revchild,'glyphicon-chevron-down':revchild}"></span>
+                                        </th>
+                                        <th ng-click="sortChildren('cell')">Cell
+                                            <span class="glyphicon sort-icon" ng-show="childSortKey=='cell'" ng-class="{'glyphicon-chevron-up':!revchild,'glyphicon-chevron-down':revchild}"></span>
+                                        </th>
+                                    </tr>
+                                    <tr ng-repeat="contact in user.contacts|orderBy:childSortKey:revchild">
+                                        <td>{{contact.phone}}</td>
+                                        <td>{{contact.cell}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+					</tbody>
+				</table> 
+				<dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+			</div>
+		</div>
+		<div>
+			Link to <a href="http://code.ciphertrick.com/2015/05/31/search-sort-and-pagination-ngrepeat-angularjs/ ">tutorial</a>.
+		</div>
+      </div>
+    </div>
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/dirPagination.js"></script>
+		<script src="app/app.js"></script>
+  </body>
+</html>
