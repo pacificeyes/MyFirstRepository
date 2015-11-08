@@ -1,4 +1,4 @@
-var app = angular.module('angularTable', ['angularUtils.directives.dirPagination']);
+var app = angular.module('myApp', ['angularUtils.directives.dirPagination']);
 
 var json = [{ "id": 1, "first_name": "Heather", "last_name": "Bell", "hobby": "Eating", "contacts": [{ "phone": "0000000000", "cell": "1111111111" }, { "phone": "6656776777", "cell": "7886757569" }] },
 { "id": 2, "first_name": "Andrea", "last_name": "Dean", "hobby": "Gaming", "contacts": [{ "phone": "2222222222", "cell": "3333333333" }, { "phone": "4334546535", "cell": "5453533566" }] },
@@ -27,7 +27,7 @@ var json = [{ "id": 1, "first_name": "Heather", "last_name": "Bell", "hobby": "E
 { "id": 25, "first_name": "Russell", "last_name": "Patterson", "hobby": "Singing", "contacts": [{ "phone": "8888888888", "cell": "9999999999" }, { "phone": "0000000000", "cell": "1111111111" }] }];
 
 
-app.controller('listdata', function ($scope, $http) {
+app.controller('PageCtrl', function ($scope, $http) {
     $scope.users = []; //declare an empty array
 
     $scope.FirstNames = ["Deborah", "Harry", "Heather", "Peter", "Andrea", "Louis"];
